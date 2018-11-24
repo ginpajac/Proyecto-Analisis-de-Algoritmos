@@ -5,20 +5,32 @@
  */
 package ec.espol.edu.main;
 
+import ec.espol.edu.algoritmosOrdenamiento.InsertionSort;
+import ec.espol.edu.algoritmosOrdenamiento.MergeSort;
+import ec.espol.edu.algoritmosOrdenamiento.QuickSort;
+import ec.espol.edu.algoritmosOrdenamiento.Utilidad;
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.*;
 
 /**
  *
  * @author Ginger Jacome
  */
 public class Principal extends javax.swing.JFrame {
+    int cantidad=10000;
+    Utilidad u;
+    int[] nArr;
+    //boolean op1,op2=false;
 
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
+        
+        u= new Utilidad(cantidad);
+        nArr =u.obtenerCopiaArray();
         this.setLocationRelativeTo(null);
     }
 
@@ -64,7 +76,7 @@ public class Principal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Merge Sort", "Quick Sort" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Merge Sort", "Quick Sort","Insertion Sort" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -75,7 +87,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel2.setText("Algoritmo 2 :");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Merge Sort", "Quick Sort" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Merge Sort", "Quick Sort","Insertion Sort" }));
         jComboBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox4ActionPerformed(evt);
@@ -114,12 +126,22 @@ public class Principal extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(102, 102, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton2.setText("Iniciar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Nombre del archivo: ");
 
         jLabel7.setText(".txt");
 
         jTextField3.setText("datos");
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Número de datos a considerar:");
         jLabel8.setVisible(false);
@@ -251,6 +273,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel5.setVisible(false);
         jTextField2.setVisible(false);
+        jButton2.setEnabled(false);
         jLabel6.setVisible(false);
         jLabel7.setVisible(false);
         jTextField3.setVisible(false);
@@ -277,6 +300,8 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         JFileChooser fc= new JFileChooser();
         fc.showOpenDialog(this);
+        FileNameExtensionFilter imgFilter = new FileNameExtensionFilter("TEXT FILES", "txt", "text");
+        fc.setFileFilter(imgFilter);
         File arch= fc.getSelectedFile();
         if(arch!=null){
             jTextField1.setText(arch.getAbsolutePath());
@@ -298,15 +323,51 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        jButton2.setEnabled(true);
         if(jRadioButton1.isSelected()){
             cambiarSeleccionDatos(true);
             cambiarSeleccionAleatorios(false);
+            //op1=true; op2=false;
         }
         else{
             cambiarSeleccionAleatorios(true);
             cambiarSeleccionDatos(false);
+            //op1=false;op2=true;
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        if(jRadioButton1.isSelected()){
+            System.out.println("FALTA");
+        }
+        else{
+            cantidad=Integer.parseInt(jTextField2.getText());
+            System.out.println(cantidad);
+            String nameFile= jTextField3.getText()+".txt";
+            u.crearTxT(nameFile);
+            creaAlgoritmo(jComboBox2.getSelectedItem().toString());
+            creaAlgoritmo(jComboBox4.getSelectedItem().toString());
+            
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+    private void creaAlgoritmo(String eleccion){
+        if(eleccion.startsWith("Q")){
+            QuickSort quicksort= new QuickSort(nArr);
+            quicksort.quickTimer();
+        }
+        else if(eleccion.startsWith("M")){
+            MergeSort mergesort= new MergeSort(nArr);
+            mergesort.mergeTimer();
+            
+        }else{
+            InsertionSort insertionsort= new InsertionSort(nArr);
+            insertionsort.insertionTimer();
+        }
+    }
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
     
     private void cambiarSeleccionDatos(boolean t){
         jTextField1.setVisible(t);

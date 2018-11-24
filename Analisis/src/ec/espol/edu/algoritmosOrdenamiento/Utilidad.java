@@ -36,16 +36,19 @@ public class Utilidad {
             return copiaArray;
 	}
 	
-        public void crearTxT(String archivo){
-        try{
-            File f =new File(archivo);
-            FileWriter escritor = new FileWriter (f,true);
-            try (BufferedWriter A = new BufferedWriter(escritor); PrintWriter salida = new PrintWriter(A)) {
-                
-                for (int i = 0; i < obtenerCopiaArray().length; i++)
-                    salida.write(obtenerCopiaArray()[i]+"\r\n");
-                }
+    public void crearTxT(String archivo){
+    try{
+        File f =new File(archivo);
+        FileWriter escritor = new FileWriter (f,true);
+        try (BufferedWriter A = new BufferedWriter(escritor); PrintWriter salida = new PrintWriter(A)) {
+
+            for (int i = 0; i < obtenerCopiaArray().length; i++)
+                salida.write(obtenerCopiaArray()[i]+"\r\n");
+            }
         } catch (Exception e) {}
     }
 	
+    public void leertxt(File archivo,int array[]){
+        
+    }
 }
