@@ -9,7 +9,15 @@ import ec.espol.edu.algoritmosOrdenamiento.InsertionSort;
 import ec.espol.edu.algoritmosOrdenamiento.MergeSort;
 import ec.espol.edu.algoritmosOrdenamiento.QuickSort;
 import ec.espol.edu.algoritmosOrdenamiento.Utilidad;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.*;
 
@@ -18,9 +26,11 @@ import javax.swing.filechooser.*;
  * @author Ginger Jacome
  */
 public class Principal extends javax.swing.JFrame {
-    int cantidad=10000;
+    int cantidad=10;
     Utilidad u;
-    int[] nArr;
+    String aux="",texto="";
+    int[]nArr1,nArr2;
+    File archivo;
     //boolean op1,op2=false;
 
     /**
@@ -29,8 +39,7 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         
-        u= new Utilidad(cantidad);
-        nArr =u.obtenerCopiaArray();
+        
         this.setLocationRelativeTo(null);
     }
 
@@ -146,6 +155,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel8.setText("Número de datos a considerar:");
         jLabel8.setVisible(false);
 
+        jTextField4.setText("1");
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField4ActionPerformed(evt);
@@ -305,9 +315,20 @@ public class Principal extends javax.swing.JFrame {
         File arch= fc.getSelectedFile();
         if(arch!=null){
             jTextField1.setText(arch.getAbsolutePath());
-            System.out.println("hecho");
+            FileReader archivos;
+            try {
+                archivos = new FileReader(arch);
+                BufferedReader lee=new BufferedReader(archivos);
+                while((aux=lee.readLine())!=null)
+                {
+                    texto+=aux+" ";
+                }
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
@@ -339,19 +360,28 @@ public class Principal extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         
         if(jRadioButton1.isSelected()){
-            System.out.println("FALTA");
+            int cant=Integer.parseInt(jTextField4.getText());
+            String []array=texto.split(" ");
+            u= new Utilidad(generaArray(array, cant));
+            nArr1 =u.obtenerCopiaArray();
+            nArr2 =u.obtenerCopiaArray();
+            creaAlgoritmo(jComboBox2.getSelectedItem().toString(),nArr1);
+            creaAlgoritmo(jComboBox4.getSelectedItem().toString(),nArr2);
+            //System.out.println("FALTA");
         }
         else{
+            u= new Utilidad(cantidad);
+            nArr1 =u.obtenerCopiaArray();
+            nArr2 =u.obtenerCopiaArray();
             cantidad=Integer.parseInt(jTextField2.getText());
-            System.out.println(cantidad);
             String nameFile= jTextField3.getText()+".txt";
             u.crearTxT(nameFile);
-            creaAlgoritmo(jComboBox2.getSelectedItem().toString());
-            creaAlgoritmo(jComboBox4.getSelectedItem().toString());
+            creaAlgoritmo(jComboBox2.getSelectedItem().toString(),nArr1);
+            creaAlgoritmo(jComboBox4.getSelectedItem().toString(),nArr2);
             
         }
     }//GEN-LAST:event_jButton2ActionPerformed
-    private void creaAlgoritmo(String eleccion){
+    private void creaAlgoritmo(String eleccion, int[] nArr){
         if(eleccion.startsWith("Q")){
             QuickSort quicksort= new QuickSort(nArr);
             quicksort.quickTimer();
@@ -383,6 +413,21 @@ public class Principal extends javax.swing.JFrame {
             jLabel6.setVisible(g);
             jLabel7.setVisible(g);
     }
+    public int[] generaArray(String [] array, int cant){
+        int datos[]=new int[array.length];
+            for(int i=0; i<array.length;i++){
+                datos[i]=Integer.parseInt(array[i]);
+            }
+        if(cant>=array.length){
+            return datos;
+        }
+        else{
+            int[] newArray = Arrays.copyOfRange(datos, 0, cant);
+            return newArray;
+        }
+    }
+    
+    
     /**
      * @param args the command line arguments
      */

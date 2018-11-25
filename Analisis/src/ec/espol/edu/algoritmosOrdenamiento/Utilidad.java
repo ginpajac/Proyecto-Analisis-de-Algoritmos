@@ -4,10 +4,12 @@ package ec.espol.edu.algoritmosOrdenamiento;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Utilidad {
 	
@@ -17,6 +19,9 @@ public class Utilidad {
 	/* Metodo que permite generar un arreglo de n mumero de 
 	 * enteros (entre 1 y n).
 	 */
+        public Utilidad(int[] list){
+            lista=list;
+        }
 	public Utilidad(int num){
             lista = new int [num];
             for (int i = 0; i < lista.length; i++) {
@@ -48,7 +53,5 @@ public class Utilidad {
         } catch (Exception e) {}
     }
 	
-    public void leertxt(File archivo,int array[]){
-        
-    }
+    
 }
