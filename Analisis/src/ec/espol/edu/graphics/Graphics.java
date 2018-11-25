@@ -38,8 +38,8 @@ public class Graphics extends JFrame{
         dataset = new DefaultXYDataset();
         
         //Declaracion de las variables a mostrar y una matriz double(x,f(x))
-        dataset.addSeries("firefox", new double[][] {{ 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017 }, { 25, 29.1, 32.1, 32.9, 31.9, 25.5, 20.1, 18.4, 15.3, 11.4, 9.5 }});
-        dataset.addSeries("ie", new double[][] {{ 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017 }, { 67.7, 63.1, 60.2, 50.6, 41.1, 31.8, 27.6, 20.4, 17.3, 12.3, 8.1 }});
+        dataset.addSeries("Algoritmo 1", new double[][] {{ 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017 }, { 25, 29.1, 32.1, 32.9, 31.9, 25.5, 20.1, 18.4, 15.3, 11.4, 9.5 }});
+        dataset.addSeries("Algoritmo 2", new double[][] {{ 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017 }, { 67.7, 63.1, 60.2, 50.6, 41.1, 31.8, 27.6, 20.4, 17.3, 12.3, 8.1 }});
         dataset.addSeries("chrome", new double[][] {{ 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017 }, { 0.2, 6.4, 14.6, 25.3, 30.1, 34.3, 43.2, 47.3, 58.4 }});
 
         //Declaracion de los colores del grafico para cada variable
@@ -52,7 +52,7 @@ public class Graphics extends JFrame{
         renderer.setSeriesStroke(2, new BasicStroke(2));
         
         //Declaracion del titulo, rango del eje Y, nombre del eje X y nombre del eje Y
-        chart = ChartFactory.createXYLineChart("Browser Quota", "Year", "Quota", dataset);
+        chart = ChartFactory.createXYLineChart("Algoritmos de ordenamiento", "Year", "Quota", dataset);
         chart.getXYPlot().getRangeAxis().setRange(0, 100);
         ((NumberAxis) chart.getXYPlot().getRangeAxis()).setNumberFormatOverride(new DecimalFormat("#'%'"));
         chart.getXYPlot().setRenderer(renderer);

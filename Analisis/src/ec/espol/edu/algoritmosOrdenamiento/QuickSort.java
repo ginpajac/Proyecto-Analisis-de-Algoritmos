@@ -77,6 +77,9 @@ public class QuickSort {
         return time;
     }
     
-    
+    public void calculaPorPartes(){
+        int cnt = arreglo.length;
+        
+    }
 
 }
